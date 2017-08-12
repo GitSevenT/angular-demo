@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>意见反馈</title>
+		<meta content="telephone=no" name="format-detection">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<meta content="on" http-equiv="cleartype">
+		
+		<link rel="stylesheet" type="text/css" href="assets/css/1reset.css" />
+		<link rel="stylesheet" type="text/css" href="assets/css/2layout.css" />
+		<link rel="stylesheet" type="text/css" href="assets/css/common.css" />
+	
+		<style>
+			body {
+				margin: 0 auto;
+			}
+			
+			.nv_main {
+				font-size: 1rem;
+				padding-left: 5%;
+				padding: 1rem 5%;
+			}
+			
+			.st_com {
+				width: 98%;
+				margin: 0 auto;
+			}
+			
+			textarea {
+				width: 99%;
+				height: 12rem;
+				border: none;
+				padding: 1rem 0 0 1%;
+			}
+			
+			button {
+				width: 92%;
+				height: 3rem;
+				line-height: 3rem;
+				color: #fff;
+				border: none;
+				display: block;
+				text-align: center;
+				margin: 1rem auto;
+				background: #FF2A2A;
+				font-size: 1.3rem;
+			}
+		</style>
+	</head>
+
+	<body ng-app="feedbackApp" ng-controller="FdConcroller">
+		<nav class="nav_com">
+			<div class="nv_main">描述</div>
+		</nav>
+		<section class="section_com">
+			<div class="st_com">
+				<textarea class="fb_val" placeholder="请尽情说出你的不愉快，我们一定改进"
+				ng-model="infos.content"></textarea>
+			</div>
+		</section>
+		<footer class="footer_com">
+			<button class="fb_btn btn" ng-click="submit()">提交</button>
+		</footer>
+	</body>
+	<script type="text/javascript" src="assets/js/angular.js"></script>
+	<script type="text/javascript" src="assets/js/angular-messages.js"></script>
+	<script type="text/javascript">
+	    angular.module("feedbackApp",[])
+	            .controller("FdConcroller", function ($scope, $http) {
+					var userInfo = window.localStorage.getItem("_user_");
+                    if(userInfo===null){
+                        alert("请先登录！");
+                        window.location = "login.html";
+                        return;
+                    }
+					userInfo = JSON.parse(userInfo);
+					$scope.infos = {
+						user_id : userInfo._id,
+						phone : userInfo.phone
+					};
+					$scope.submit = function () {
+					    $http({
+							method : "GET",
+							url : "/feedback",
+							params  : { data : $scope.infos }//发送ajax请求，数据格式由接口文档确定
+//                            headers : {
+//                            'Content-Type' : 'application/x-www-form-urlencoded'
+//                            }
+						})
+
+                        .success(function (result) {//发送ajax成功，从服务器接收数据
+                            console.log("吐槽数据:"+result);
+                            alert("吐槽成功")
+                        })
+                        .error(function (err) {
+                            console.log(err);
+                        })
+					}
+
+	            })
+	</script>
+</html>

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>新增收货地址</title>
+	<meta content="telephone=no" name="format-detection">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+	<meta content="yes" name="apple-mobile-web-app-capable">
+	<meta content="black" name="apple-mobile-web-app-status-bar-style">
+	<meta content="on" http-equiv="cleartype">
+	<!--build:css inline  -->
+	<link rel="stylesheet" type="text/css" href="assets/css/1reset.css" />
+	<link rel="stylesheet" type="text/css" href="assets/css/2layout.css" />
+	<link rel="stylesheet" type="text/css" href="assets/css/common.css" />
+	<!-- /build -->
+	<style>
+			#ana_main {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.ana_linkman,
+			.ana_addr {
+				font-size: 0.88rem;
+				margin: 10px 0 5px 15px;
+				color: #969696;
+			}
+			
+			.ana_fillin {
+				background-color: #fff;
+				width: 100%;
+				overflow: hidden;
+			}
+			
+			.ana_fillin ul li {
+				line-height: 2.81rem;
+				width: 100%;
+				overflow: hidden;
+				height: 2.81rem;
+			}
+			
+			.ana_fillin ul li p {
+				/*display: table-cell;*/
+			}
+			
+			.ana_fillin ul li:nth-child(2) {
+				border-top: 1px solid #f0f0f0;
+				border-bottom: 1px solid #f0f0f0;
+			}
+			
+			.ana_fillin ul li p:nth-child(1) {
+				width: 19%;
+				text-align: center;
+				border-right: 1px solid #f0f0f0;
+				height: 2.81rem;
+				font-size: 0.88rem;
+			}
+			
+			.ana_fillin ul li input {
+				height: 2.81rem;
+				width: 100%;
+				border: none;
+				font-size: 0.85rem;
+				padding-left: 5px;
+			}
+			
+			.ana_fillin ul li p:nth-child(2) {
+				width: 80%;
+				font-size: 0.88rem;
+			}
+			
+			.ana_fillin ul li p i {
+				width: 0.81rem;
+				height: 0.81rem;
+				border: 1px solid #c8c8c8;
+				display: inline-block;
+				margin: -2px 5px;
+			}
+			
+			.chooseBg {
+				background: url(assets/images/ca_choose.jpg) no-repeat;
+				background-size: 100%;
+			}
+			
+			.ana_man {
+				margin-right: 15px;
+			}
+			
+			.ana_addrDetail {
+				background: #fff;
+				overflow: hidden;
+				width: 100%;
+			}
+			
+			.ana_addrDetail li {
+				overflow: hidden;
+				line-height: 2.81rem;
+				font-size: 0.88rem;
+				width: 100%;
+				height: 2.81rem;
+			}
+			
+			.ana_addrDetail li:nth-child(1) {
+				border-bottom: 1px solid #f0f0f0;
+			}
+			
+			.ana_addrDetail li div:nth-child(1) {
+				width: 45%;
+				border-right: 1px solid #f0f0f0;
+				text-align: right;
+				padding-right: 5%;
+				font-size: 0.88rem;
+			}
+			
+			.ana_addrDetail li div:nth-child(2) {
+				width: 55%;
+			}
+			
+			.ana_addrDetail i {
+				width: 0.625rem;
+				height: 1rem;
+				float: left;
+				display: inline-block;
+				background: url(assets/images/ana_search.png) no-repeat;
+				background-size: 100%;
+				margin: 0.9rem 0.4rem;
+				
+			}
+			
+			.ana_addrDetail input {
+				height: 2.81rem;
+				border: none;
+				width: 70%;
+				font-size: 0.85rem;
+			}
+			
+			.ana_detailAddr {
+				margin-left: 10px;
+			}
+			
+			.ana_btn {
+				width: 92%;
+				height: 2.81rem;
+				background: #eb3c3c;
+				margin: 0 auto;
+				display: block;
+				text-align: center;
+				color: #fff;
+				font-size: 1rem;
+				border: none;
+				margin-top: 20px;
+			}
+		</style>
+</head>
+
+<body ng-app="addrMaApp" ng-controller="AddrMaController">
+	<div id="ana_main">
+
+		<p class="ana_linkman">联系人信息</p>
+		<div class="ana_fillin">
+			<ul>
+				<li>
+					<p class="fl">姓 名：</p>
+					<p class="fr">
+						<input type="text" maxlength="20" name="contactor" placeholder="请填写收货人的姓名"
+                        ng-model="userAddrInfo.contactor">
+					</p>
+				</li>
+				<li>
+					<p class="fl">性 别：</p>
+					<p class="fr ana_sex">
+						<span class="ana_man" ng-click="setSex(1)">
+							<i data-sex="1" ng-class="{chooseBg:userAddrInfo.sex===1}"></i>男士
+						</span>
+						<span class="ana_girl" ng-click="setSex(2)">
+							<i data-sex="2" ng-class="{chooseBg:userAddrInfo.sex===2}"></i>女士
+						</span>
+					</p>
+				</li>
+				<li>
+					<p class="fl">手 机：</p>
+					<p class="fr">
+						<input type="text" name="mobilephone" placeholder="请填写收货人的手机号"
+                        ng-model="userAddrInfo.phone">
+					</p>
+				</li>
+			</ul>
+		</div>
+
+		<p class="ana_addr">地址信息</p>
+		<div class="ana_addrDetail">
+			<ul>
+				<li>
+					<div class="fl">学校\大厦\写字楼:</div>
+					<div class="fr">
+						<i></i>
+						<input type="text" name="address" class="ana_searchAddr" placeholder="点击选择地址"
+                         ng-click="chooseAddress()" ng-model="userAddrInfo.address">
+					</div>
+				</li>
+				<li>
+					<div class="fl">详细地址:</div>
+					<div class="fr">
+						<input type="text" class="ana_detailAddr" name="doorplate" placeholder="请填写门牌号"
+                        ng-model="userAddrInfo.doorplate">
+					</div>
+				</li>
+			</ul>
+		</div>
+		<button class="ana_btn btn" ng-click="saveAddr()" ng-bind="isSave ? '保存' : '更新'"></button>
+	</div>
+	<script type="text/javascript" src="./assets/js/angular.js"></script>
+	<script type="text/javascript">
+	    angular.module("addrMaApp",[])
+	            .controller("AddrMaController", function ($scope,$http) {
+                    /*获取注册时保存的用户信息*/
+					var user = JSON.parse(localStorage.getItem("_user_"));
+                    if(user===null){
+                        alert("请登录");
+                        window.location = "login.html";
+                        return;
+                    }
+                    /*将登录信息保存到address中*/
+                    $scope.userAddrInfo = {
+                            userId : user._id
+                    };
+
+                    /*取出保存的更改信息，以便显示*/
+                    var userUpdateAddr = sessionStorage.getItem("_update_address_");
+                    $scope.isSave = true;
+                    /*判断是保存还是更新*/
+                    if(userUpdateAddr!==null){//更新
+                        $scope.isSave = false;
+                        userUpdateAddr = JSON.parse(userUpdateAddr);
+                        $scope.userAddrInfo = userUpdateAddr;
+						sessionStorage.removeItem("_update_address_");
+//
+                    }else{
+
+//                        console.log("更改的数据"+userUpdateAddr.contactor);
+                    }
+
+
+                    /*选择地址后，将原来输入的信息带回来*/
+                    var userAddr = sessionStorage.getItem("_user_address_");
+                    if(userAddr!==null){
+                        $scope.userAddrInfo = JSON.parse(userAddr);
+                        console.log("==========="+$scope.userAddrInfo);
+                        sessionStorage.removeItem("_user_address_")
+
+                    }
+
+
+                    /*获取选择的地图地址信息*/
+                    var selAddress = sessionStorage.getItem("_sele_address_");
+                    if(selAddress!==null){
+                        selAddress = JSON.parse(selAddress);
+                        console.log("-----------"+selAddress.address);
+                        $scope.userAddrInfo.address = selAddress.name;
+                        $scope.userAddrInfo.lat = selAddress.lat;
+                        $scope.userAddrInfo.lng = selAddress.lng;
+                        $scope.userAddrInfo.cityId = selAddress.cityId;
+                        sessionStorage.removeItem("_sele_address_");
+
+                    }
+                        console.log($scope.userAddrInfo.address);
+
+
+                    /*进入百度地图，获取当前的用户地址，并保存到address中*/
+                    $scope.chooseAddress = function () {
+
+                        /*将收集到的用户address信息保存到sessionStorage中*//*此时没有门牌号信息*/
+                        sessionStorage.setItem("_user_address_",JSON.stringify($scope.userAddrInfo));
+                        /*跳转到地图页面*/
+                        window.location = "chooseCoordinate.html";
+
+
+                    };
+
+
+                    /*发送ajax请求，将用户的address信息保存到后台*/
+                    $scope.saveAddr =function() {
+                        if($scope.isSave){
+
+                            $http({
+                                method : "GET",
+                                url : "/insertAddr",
+                                params : {address:$scope.userAddrInfo}
+                                })
+                                .success(function (reslut) {
+                                    console.log(reslut);
+                                    alert("添加成功");
+                                    /*添加成功后保存到地址页面，并显示添加地址*/
+                                    window.location = "addrManage.html";
+
+                                })
+                                .error(function (result) {
+                                    console.log(result);
+                                });
+
+                        }else{
+
+                            $http({
+                                method : "GET",
+                                url : "/updateAddr",
+                                params : {address:$scope.userAddrInfo}
+                            })
+                                    .success(function (reslut) {
+                                        console.log(reslut);
+                                        console.log("+++++++++++++++++++++++++++++++");
+                                        alert("更改成功");
+                                        /*添加成功后保存到地址页面，并显示添加地址*/
+                                        window.location = "addrManage.html";
+
+                                    })
+                                    .error(function (result) {
+                                        console.log(result);
+                                    });
+
+                        }
+
+                    };
+                    /*设置性别选项*/
+                    $scope.setSex = function(sex) {
+                        $scope.userAddrInfo.sex = sex;
+                    }
+                })
+
+	</script>
+</body>
+</html>
